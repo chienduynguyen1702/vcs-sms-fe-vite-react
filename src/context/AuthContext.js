@@ -63,7 +63,6 @@ const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         const accessToken = response?.data?.data?.token;
         token.setAccessToken(accessToken);
-        alert(`response`, response);
         saveMe(response?.data);
         navigate.push('/home', { replace: true });
         console.log('X');
