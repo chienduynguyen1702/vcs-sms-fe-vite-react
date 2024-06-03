@@ -60,12 +60,12 @@ const SignIn = () => {
             onSubmit={method.handleSubmit(handleSubmit)}
             className={styles.body}
           >
-            <RHFTextInput
+            {/* <RHFTextInput
               name="organization_name"
               type="text"
               placeholder="Organization name"
               icon="edit"
-            />
+            /> */}
             <RHFTextInput
               name="email"
               type="text"

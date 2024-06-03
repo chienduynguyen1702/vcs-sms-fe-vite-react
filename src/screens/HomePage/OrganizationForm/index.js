@@ -17,7 +17,7 @@ const OrganizationForm = ({ title = '', method, handleSubmit, onClose }) => {
             name="name"
             label="Organization name"
             type="text"
-            defaultValue="Tnter organization name"
+            defaultValue="Enter organization name"
             // default={orgData?.name}
             placeholder="Enter organization name"
             tooltip="Organization name is required"
@@ -38,22 +38,26 @@ const OrganizationForm = ({ title = '', method, handleSubmit, onClose }) => {
             defaultValue="Enter description"
             // value={orgData?.description}
             placeholder="Enter description"
-            // tooltip="Please enter correct description format"
+          />
+          <RHFTextInput
+            name="website_url"
+            label="Website URL"
+            type="text"
+            defaultValue="Enter Website URL"
+            placeholder="Enter Website URL"
           />
           <RHFTextInput
             name="address"
             label="Address"
             type="text"
             defaultValue="Enter address"
-            // value={orgData?.address}
             placeholder="Enter address"
-            // tooltip="Enter address"
           />
           <RHFTextInput
             name="establishment_date"
             label="Establishment date"
             type="text"
-            tooltip="Enter establishment date with format DD-MM-YYYY"
+            tooltip="Enter establishment date with format YYYY-MM-DD"
           />
         </Item>
 

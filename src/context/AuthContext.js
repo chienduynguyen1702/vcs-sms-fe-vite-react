@@ -24,6 +24,7 @@ const AuthProvider = ({ children }) => {
   const [me, setMe] = useState(null);
 
   const saveMe = useCallback((data) => {
+    console.log('data', data);
     const me = {
       // id: data.id,
       username: data?.username,
@@ -56,22 +57,15 @@ const AuthProvider = ({ children }) => {
   const login = useCallback(
     async (data) => {
       try {
-        const response = await loginFn(data);
-        // console.log('response', response);
-        saveMe(response?.data?.['user']);
-        // console.log(getCookie());
-        // cookies.set('Authorization', response?.data?.['token'], {
-        //   path: '/',
-        //   maxAge: 60 * 60 * 24 * 7,
-        //   // domain: 'param-store.datn.live',
-        //   secure: true,
-        //   sameSite: 'none',
-        // });
-        setIsAuthenticated(true);
-        token.setAccessToken(response?.data?.token);
         toast.success('Login success');
-        navigate.push('/dashboard', { replace: true });
-        alert('Login success');
+        const response = await loginFn(data);
+        // console.log('response.data', response.data);
+        setIsAuthenticated(true);
+        const accessToken = response?.data?.data?.token;
+        token.setAccessToken(accessToken);
+        alert(`response`, response);
+        saveMe(response?.data);
+        navigate.push('/home', { replace: true });
         console.log('X');
         return true;
       } catch {

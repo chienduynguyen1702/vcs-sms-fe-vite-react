@@ -33,7 +33,7 @@ const EditOrganizationForm = ({ orgData, onClose, editedItemId }) => {
 
   useEffect(() => {
     orgData.establishment_date = moment(orgData.establishment_date).format(
-      'DD-MM-YYYY',
+      'YYYY-MM-DD',
     );
     method.reset(orgData); // Populate form fields with organization data
   }, [orgData, method]);
