@@ -22,10 +22,16 @@ const navigation = [
     url: '/dashboard',
     permissions: [''],
   },
+  // {
+  //   title: 'Parameters',
+  //   icon: 'diamond',
+  //   url: '/projects',
+  //   permissions: [''],
+  // },
   {
-    title: 'Parameters',
-    icon: 'diamond',
-    url: '/projects',
+    title: 'Servers',
+    icon: 'database',
+    url: '/servers',
     permissions: [''],
   },
 ];

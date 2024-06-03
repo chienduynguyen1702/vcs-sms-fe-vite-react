@@ -44,7 +44,7 @@ const Overview = () => {
         )}
       </Modal>
       <Card
-        title={`${org.name}`}
+        title={`Overview`}
         classTitle="title-blue"
         className="mb-5"
         head={

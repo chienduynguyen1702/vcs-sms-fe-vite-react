@@ -21,7 +21,7 @@ const HomePage = lazy(() => import('./screens/HomePage'));
 const UsersAndSettingsPage = lazy(() => import('./screens/Users&Settings'));
 const UsersPage = lazy(() => import('./screens/Users&Settings/Users'));
 const RolesPage = lazy(() => import('./screens/Users&Settings/Roles'));
-
+const ServerPage = lazy(() => import('./screens/ServersPage'));
 const ProjectsPage = lazy(() => import('./screens/Projects'));
 const DashboardPage = lazy(() => import('./screens/DashboardPage'));
 
@@ -94,7 +94,10 @@ function App() {
                     path="home/*"
                     element={
                       <SuspenseContainer>
-                        <PageContent title="Home Page" wide>
+                        <PageContent
+                          title="VCS - Server Management System"
+                          wide
+                        >
                           <HomePage />
                         </PageContent>
                       </SuspenseContainer>
@@ -107,6 +110,16 @@ function App() {
                       <SuspenseContainer>
                         <PageContent wide>
                           <ProjectsPage />
+                        </PageContent>
+                      </SuspenseContainer>
+                    }
+                  />
+                  <Route
+                    path="servers/*"
+                    element={
+                      <SuspenseContainer>
+                        <PageContent wide>
+                          <ProjectParametersPage />
                         </PageContent>
                       </SuspenseContainer>
                     }
