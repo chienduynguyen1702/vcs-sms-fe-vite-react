@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
   const [me, setMe] = useState(null);
 
   const saveMe = useCallback((data) => {
-    console.log('data', data);
+    // console.log('saveMe data', data);
     const me = {
       // id: data.id,
       username: data?.username,
@@ -63,7 +63,7 @@ const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         const accessToken = response?.data?.data?.token;
         token.setAccessToken(accessToken);
-        saveMe(response?.data);
+        saveMe(response?.data.data);
         navigate.push('/home', { replace: true });
         console.log('X');
         return true;
