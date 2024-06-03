@@ -43,17 +43,17 @@ jobs:
           restore-keys: |
             clouding-frontend-${{ runner.os }}-node_modules-cache-restore-key-from-package.json-${{ hashFiles('**/package.json') }}
 
-      - name: 'Setup jq'
-        uses: dcarbone/install-jq-action@v2
-        with:
-          version: '1.7'
-          force: false
-      - name: Get build parameters
-        id: get_build_parameters
-        run: |
-          export PARAMETER_STORE_TOKEN=${{ secrets.AGENT_PROD_BUILD }}
-          ./scripts/get-parameters.sh -o .env
-          # cat .env | grep TEST
+      # - name: 'Setup jq'
+      #   uses: dcarbone/install-jq-action@v2
+      #   with:
+      #     version: '1.7'
+      #     force: false
+      # - name: Get build parameters
+      #   id: get_build_parameters
+      #   run: |
+      #     export PARAMETER_STORE_TOKEN=${{ secrets.AGENT_PROD_BUILD }}
+      #     ./scripts/get-parameters.sh -o .env
+      #     # cat .env | grep TEST
 
       - name: Install dependencies
         #if cache is true then skip npm i, else run npm i
@@ -62,18 +62,18 @@ jobs:
       - name: Build
         run: CI=false yarn build
 
-      - name: Get test parameters
-        id: get_test_parameters
-        run: |
-          export PARAMETER_STORE_TOKEN=${{ secrets.AGENT_PROD_TEST }}
-          ./scripts/get-parameters.sh -o param.test
-          cat param.test
-      - name: Test
-        run: |
-          echo "Testing..."
-          echo "Running 10 test cases..."
-          echo "Result: 10/10 passed."
-          echo "Test passed successfully!"
+      # - name: Get test parameters
+      #   id: get_test_parameters
+      #   run: |
+      #     export PARAMETER_STORE_TOKEN=${{ secrets.AGENT_PROD_TEST }}
+      #     ./scripts/get-parameters.sh -o param.test
+      #     cat param.test
+      # - name: Test
+      #   run: |
+      #     echo "Testing..."
+      #     echo "Running 10 test cases..."
+      #     echo "Result: 10/10 passed."
+      #     echo "Test passed successfully!"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -97,32 +97,32 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 #
-  deploy:
-    name: Deploy to remote server
-    needs: [build-test, prepare]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: 'Setup jq'
-      uses: dcarbone/install-jq-action@v2
-      with:
-        version: '1.7'
-        force: false
-    - name: Get deploy parameters
-      id: get_deploy_parameters
-      run: |
-        export PARAMETER_STORE_TOKEN=${{ secrets.AGENT_PROD_DEPLOY }}
-        ./scripts/get-parameters.sh -o param.deploy
-        cat param.deploy
+  # deploy:
+  #   name: Deploy to remote server
+  #   needs: [build-test, prepare]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: 'Setup jq'
+  #     uses: dcarbone/install-jq-action@v2
+  #     with:
+  #       version: '1.7'
+  #       force: false
+  #   - name: Get deploy parameters
+  #     id: get_deploy_parameters
+  #     run: |
+  #       export PARAMETER_STORE_TOKEN=${{ secrets.AGENT_PROD_DEPLOY }}
+  #       ./scripts/get-parameters.sh -o param.deploy
+  #       cat param.deploy
 
-    - name: Deploy to remote server
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.SERVER_ADDRESS }}
-        username: ${{ secrets.SERVER_USERNAME }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        port: ${{ secrets.SERVER_PORT }}
-        script: |
-          cd /home/${{ secrets.SERVER_USERNAME }}/${{ secrets.SERVER_FOLDER }}
-          ./docker-compose-restart-fe.sh
-          # . ./export-token.sh  && ./get-parameters.sh  -o .env  
+  #   - name: Deploy to remote server
+  #     uses: appleboy/ssh-action@v1.0.3
+  #     with:
+  #       host: ${{ secrets.SERVER_ADDRESS }}
+  #       username: ${{ secrets.SERVER_USERNAME }}
+  #       password: ${{ secrets.SERVER_PASSWORD }}
+  #       port: ${{ secrets.SERVER_PORT }}
+  #       script: |
+  #         cd /home/${{ secrets.SERVER_USERNAME }}/${{ secrets.SERVER_FOLDER }}
+  #         ./docker-compose-restart-fe.sh
+  #         # . ./export-token.sh  && ./get-parameters.sh  -o .env  
