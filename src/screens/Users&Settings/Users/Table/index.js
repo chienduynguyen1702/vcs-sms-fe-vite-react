@@ -24,6 +24,7 @@ const Table = ({
             <div className="tableCell pb-4">Name</div>
             <div className="tableCell">Mail</div>
             <div className="tableCell">Phone</div>
+            <div className="tableCell">Role</div>
             <div className="tableCell"></div>
           </div>
           {isSuccess &&

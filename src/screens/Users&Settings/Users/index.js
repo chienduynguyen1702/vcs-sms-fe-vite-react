@@ -47,7 +47,6 @@ const UsersPage = () => {
       title: 'User',
     },
   });
-
   return (
     <>
       <Modal

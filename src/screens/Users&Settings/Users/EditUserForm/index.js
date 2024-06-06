@@ -5,7 +5,7 @@ import UserForm from '../UserForm';
 import { getUser } from '../../../../services/api';
 import { toast } from 'react-toastify';
 
-const EditUserForm = ({ editedItemId ,onClose}) => {
+const EditUserForm = ({ editedItemId, onClose }) => {
   const { editUserMutation } = useListUsers();
   const method = useForm({});
   const handleSubmit = (data) => {
@@ -14,11 +14,11 @@ const EditUserForm = ({ editedItemId ,onClose}) => {
         onClose();
       },
       onError: (error) => {
-        console.log("error", error.response.data.error)
+        console.log('error', error.response.data.error);
         toast.error(error.response.data.error, {
           autoClose: 5000,
         });
-      }
+      },
     });
   };
 
@@ -26,8 +26,8 @@ const EditUserForm = ({ editedItemId ,onClose}) => {
     const fetchData = async () => {
       try {
         const response = await getUser(editedItemId);
-
-        const userData =  response.data.data.users;// Assuming response.data contains user information
+        console.log('response', response);
+        const userData = response.data.data; // Assuming response.data contains user information
         method.reset(userData); // Populate form fields with user data
       } catch (error) {
         console.error('Error fetching user data:', error);

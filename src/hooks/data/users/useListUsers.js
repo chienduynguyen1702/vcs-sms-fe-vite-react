@@ -23,13 +23,14 @@ const useListUsers = () => {
   }, [limit, page, queryString, setQueryString]);
 
   const parseData = useCallback((data) => {
-    const users = data?.users?.map((item) => {
+    const users = data?.users.map((item) => {
       return {
         id: item?.id,
         username: item?.username,
         phone: item?.phone,
         email: item?.email,
         is_organization_admin: item?.is_organization_admin,
+        role_name: item?.role.name,
         // avatarUrl: item.avatar_url,
         // projects: item.projects,
         // permissionsCount: item.permissions_count,

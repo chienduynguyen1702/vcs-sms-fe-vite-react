@@ -157,19 +157,16 @@ function App() {
                   </Route>
                   <Route
                     exact
-                    path="user-setting/*"
+                    path="setting/*"
                     element={
                       <SuspenseContainer>
-                        <PageContent title="Users & Settings" wide>
+                        <PageContent title="Users & Roles" wide>
                           <UsersAndSettingsPage />
                         </PageContent>
                       </SuspenseContainer>
                     }
                   >
-                    <Route
-                      index
-                      element={<Navigate to="/user-setting/users" />}
-                    />
+                    <Route index element={<Navigate to="/setting/users" />} />
                     <Route path="users/*" element={<UsersPage />}></Route>
                     <Route path="roles/*" element={<RolesPage />}></Route>
                   </Route>

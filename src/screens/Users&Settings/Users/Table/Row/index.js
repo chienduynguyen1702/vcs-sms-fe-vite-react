@@ -39,6 +39,10 @@ const Row = ({ item, setEditedItemId, archiveMutation }) => {
       {/* <div className="tableCell">{item?.lastSignIn}</div> */}
       <div className="tableCell">{item?.email}</div>
       <div className="tableCell">{item?.phone}</div>
+      <div className="tableCell">
+        {/* {item.is_organization_admin ? 'Admin' : 'User'} */}
+        {item.role_name}
+      </div>
       <div className="tableCell roundedRight">
         <PopoverEditAndArchive
           itemId={item?.id}

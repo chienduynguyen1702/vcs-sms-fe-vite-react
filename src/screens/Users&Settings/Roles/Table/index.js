@@ -17,8 +17,8 @@ const Table = ({
         <div className="tableContainer d-block d-sm-table">
           <div className="tableHead">
             <div className="tableCell pb-4">Name</div>
+            <div className="tableCell">Description</div>
             <div className="tableCell">Assigned to</div>
-            {/* <div className="tableCell">Permissions</div> */}
             <div className="tableCell"></div>
           </div>
           {isSuccess &&

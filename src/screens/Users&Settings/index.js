@@ -5,7 +5,7 @@ import { useMatch } from 'react-router-dom';
 const UsersAndSettings = () => {
   const navigate = useNavigate();
 
-  const usersMatch = useMatch('/user-setting/users');
+  const usersMatch = useMatch('/setting/users');
 
   const isUsersMode = useMemo(() => {
     return Boolean(usersMatch);
@@ -16,13 +16,13 @@ const UsersAndSettings = () => {
       <div className="d-flex mb-3 responsiveTwoButtons">
         <button
           className={`navigateButton ${isUsersMode ? 'active' : ''} `}
-          onClick={() => navigate('/user-setting/users')}
+          onClick={() => navigate('/setting/users')}
         >
           Users
         </button>
         <button
           className={`navigateButton ${!isUsersMode ? 'active' : ''} `}
-          onClick={() => navigate('/user-setting/roles')}
+          onClick={() => navigate('/setting/roles')}
         >
           Roles
         </button>

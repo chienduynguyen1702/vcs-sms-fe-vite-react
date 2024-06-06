@@ -52,48 +52,48 @@ export const getMe = () =>
 export const getListUser = (queryString) =>
   authApi({
     method: 'GET',
-    url: '/settings/users',
+    url: '/users',
     params: queryString,
   });
 
 export const addUser = (data) =>
   authApi({
     method: 'POST',
-    url: '/settings/users',
+    url: '/users',
     data,
   });
 
 export const editUser = (id, data) =>
   authApi({
     method: 'PUT',
-    url: `/settings/users/${id}`,
+    url: `/users/${id}`,
     data,
   });
 
 export const getUser = (id) =>
   authApi({
     method: 'GET',
-    url: `/settings/users/${id}`,
+    url: `/users/${id}`,
   });
 
 export const getArchivedUsers = () => {
   return authApi({
     method: 'GET',
-    url: '/settings/users/archived',
+    url: '/users/archived',
   });
 };
 
 export const archiveUser = (id) => {
   return authApi({
     method: 'PATCH',
-    url: `/settings/users/${id}/archive`,
+    url: `/users/${id}/archive`,
   });
 };
 
 export const unarchiveUser = (id) => {
   return authApi({
     method: 'PATCH',
-    url: `/settings/users/${id}/unarchive`,
+    url: `/users/${id}/unarchive`,
   });
 };
 
@@ -102,7 +102,7 @@ export const unarchiveUser = (id) => {
 export const getListRoles = (params) =>
   authApi({
     method: 'GET',
-    url: '/settings/roles/',
+    url: '/roles',
     params,
     withCredentials: true,
   });
@@ -110,21 +110,21 @@ export const getListRoles = (params) =>
 export const addRole = (data) =>
   authApi({
     method: 'POST',
-    url: '/settings/roles',
+    url: '/roles',
     data,
   });
 
 export const editRole = (id, data) =>
   authApi({
     method: 'PUT',
-    url: `/settings/roles/${id}`,
+    url: `/roles/${id}`,
     data,
   });
 
 export const getRole = (id) =>
   authApi({
     method: 'GET',
-    url: `/settings/roles/${id}`,
+    url: `/roles/${id}`,
   });
 
 export const getArchivedRoles = () => {
@@ -169,7 +169,7 @@ export const editOrganizationById = (id, data) =>
 export const getOrganizationById = () =>
   authApi({
     method: 'GET',
-    url: `/organizations/`,
+    url: `/organizations`,
   });
 export const getOrganizationByID = (org_id) =>
   authApi({

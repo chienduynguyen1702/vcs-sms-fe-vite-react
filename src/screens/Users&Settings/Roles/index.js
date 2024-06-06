@@ -68,7 +68,7 @@ function Roles() {
       </Modal>
 
       <Card
-        title={`${isListRolesSuccess ? pagination?.total : '-'} Roles`}
+        title={`${isListRolesSuccess ? listRoles?.length : '-'} Roles`}
         classTitle="title-purple"
         head={
           <>

@@ -113,7 +113,7 @@ const Sidebar = ({ className, onClose }) => {
               className={({ isActive }) =>
                 cn(styles.item, { [styles.active]: isActive })
               }
-              to={'/user-setting/users'}
+              to={'/setting/users'}
               end
               onClick={() => {
                 onClose();
@@ -121,7 +121,7 @@ const Sidebar = ({ className, onClose }) => {
               }}
             >
               <Icon name="setting" size="24" />
-              Users & Settings
+              Users & Roles
             </NavLink>
           </button>
         </div>

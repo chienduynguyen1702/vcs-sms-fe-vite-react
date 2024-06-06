@@ -43,7 +43,7 @@ const useListArchived = ({
     queryFn: () => {
       return listArchivedAPI();
     },
-    select: (data) => parseData(data.data.data.users),
+    select: (data) => parseData(data.data.data),
   });
 
   const dataFiltered = useMemo(() => {
