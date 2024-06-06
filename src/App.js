@@ -22,27 +22,7 @@ const UsersAndSettingsPage = lazy(() => import('./screens/Users&Settings'));
 const UsersPage = lazy(() => import('./screens/Users&Settings/Users'));
 const RolesPage = lazy(() => import('./screens/Users&Settings/Roles'));
 const ServerPage = lazy(() => import('./screens/ServersPage'));
-const ProjectsPage = lazy(() => import('./screens/Projects'));
-const DashboardPage = lazy(() => import('./screens/DashboardPage'));
 
-const ProjectDetailPage = lazy(() => import('./screens/ProjectDetail'));
-const ProjectOverviewPage = lazy(() =>
-  import('./screens/ProjectDetail/OverviewPage'),
-);
-const ProjectParametersPage = lazy(() =>
-  import('./screens/ProjectDetail/ParametersPage'),
-);
-const ProjectTrackingPage = lazy(() =>
-  import('./screens/ProjectDetail/TrackingPage'),
-);
-const ProjectAgentPage = lazy(() =>
-  import('./screens/ProjectDetail/AgentPage'),
-);
-
-const DashboardHighLight = lazy(() =>
-  import('./screens/ProjectDetail/Dashboard'),
-);
-const Workflows = lazy(() => import('./screens/ProjectDetail/Workflows'));
 const SignIn = lazy(() => import('./screens/Authentication/SignIn'));
 const ResetPassword = lazy(() =>
   import('./screens/Authentication/ResetPassword'),
@@ -80,17 +60,6 @@ function App() {
                 >
                   <Route
                     index
-                    path="dashboard/*"
-                    element={
-                      <SuspenseContainer>
-                        <PageContent title="Dashboard" wide>
-                          <DashboardPage />
-                        </PageContent>
-                      </SuspenseContainer>
-                    }
-                  />
-                  <Route
-                    index
                     path="home/*"
                     element={
                       <SuspenseContainer>
@@ -104,57 +73,15 @@ function App() {
                     }
                   />
                   <Route
-                    exact
-                    path="projects/*"
-                    element={
-                      <SuspenseContainer>
-                        <PageContent wide>
-                          <ProjectsPage />
-                        </PageContent>
-                      </SuspenseContainer>
-                    }
-                  />
-                  <Route
                     path="servers/*"
                     element={
                       <SuspenseContainer>
-                        <PageContent wide>
-                          <ProjectParametersPage />
+                        <PageContent title="Servers" wide>
+                          <ServerPage />
                         </PageContent>
                       </SuspenseContainer>
                     }
                   />
-                  <Route
-                    exact
-                    path="project-detail/:id/*"
-                    element={
-                      <SuspenseContainer>
-                        {/* <PageContent title="Project Detail" wide> */}
-                        <ProjectDetailPage />
-                        {/* </PageContent> */}
-                      </SuspenseContainer>
-                    }
-                  >
-                    <Route index element={<Navigate to="parameters" />} />
-                    <Route path="workflows/*" element={<Workflows />} />
-                    <Route
-                      path="dashboard/*"
-                      element={<DashboardHighLight />}
-                    />
-                    <Route
-                      path="overview/*"
-                      element={<ProjectOverviewPage />}
-                    />
-                    <Route
-                      path="parameters/*"
-                      element={<ProjectParametersPage />}
-                    />
-                    <Route path="agents/*" element={<ProjectAgentPage />} />
-                    <Route
-                      path="tracking/*"
-                      element={<ProjectTrackingPage />}
-                    />
-                  </Route>
                   <Route
                     exact
                     path="setting/*"

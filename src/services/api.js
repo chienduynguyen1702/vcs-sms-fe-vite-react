@@ -204,6 +204,65 @@ export const getOrganizationDashboardLogs = (
       granularity,
     },
   });
+// servers
+export const getListServers = (queryString) =>
+  authApi({
+    method: 'GET',
+    url: '/servers',
+    params: queryString,
+  });
+
+export const addServer = (data) =>
+  authApi({
+    method: 'POST',
+    url: '/servers',
+    data,
+  });
+
+export const editServer = (server_id, data) =>
+  authApi({
+    method: 'PUT',
+    url: `/servers/${server_id}`,
+    data,
+  });
+
+export const getServerByID = (server_id) =>
+  authApi({
+    method: 'GET',
+    url: `/servers/${server_id}`,
+  });
+
+export const deleteServer = (server_id) =>
+  authApi({
+    method: 'DELETE',
+    url: `/servers/${server_id}`,
+  });
+
+export const getArchivedServers = () =>
+  authApi({
+    method: 'GET',
+    url: '/servers/archived',
+  });
+
+export const archiveServer = (server_id) =>
+  authApi({
+    method: 'PATCH',
+    url: `/servers/${server_id}/archive`,
+  });
+
+export const unarchiveServer = (server_id) =>
+  authApi({
+    method: 'PATCH',
+    url: `/servers/${server_id}/unarchive`,
+  });
+
+export const downloadListServer = (queryString) =>
+  authApi({
+    method: 'GET',
+    url: '/servers/download',
+    params: queryString,
+  });
+
 // ------------------------------ Project List ------------------------------
 
 export const getListProjects = (params, queryString) =>

@@ -15,24 +15,19 @@ import {
 } from '../../components';
 
 import Table from './components/Table/Table';
-import AddParameterForm from './components/AddParameterForm';
-import EditParameterForm from './components/EditParameterForm';
+import AddServerForm from './components/AddServerForm';
+import EditServerForm from './components/EditServerForm';
 import FormFilter from './components/FormFilter';
-import ApplyParamForm from './components/ApplyParamForm';
-import ReleaseVersionForm from './components/ReleaseVersionForm';
-import styles from './Parameter.module.sass';
-import {
-  useListParameters,
-  useListParametersArchived,
-  useProjectOverviewAndUserList,
-} from '../../hooks/data';
-import {
-  archiveParameter,
-  getArchivedParameters,
-  unarchiveParameter,
-} from '../../services/api';
+// import ReleaseVersionForm from './components/ReleaseVersionForm';
+import styles from './Server.module.sass';
+import { useListServers, useListServersArchived } from '../../hooks/data';
 
-const ParametersPage = () => {
+import {
+  archiveServer,
+  getArchivedServers,
+  unarchiveServer,
+} from '../../services/api';
+const ServersPage = () => {
   const { id } = useParams();
   const [isAddMode, setIsAddMode] = useState(false);
   const [isReleaseMode, setIsReleaseMode] = useState(false);
@@ -40,68 +35,33 @@ const ParametersPage = () => {
   const [isApplying, setIsApplying] = useState(false);
   const { queryString, setQueryString } = useQueryString();
   const {
-    listParameters,
-    isLoading: isListParametersLoading,
+    listServers,
+    isLoading: isListServersLoading,
     isSuccess: isListUsersSuccess,
     pagination,
-    // stages,
-    // environments,
-    versions,
-    downloadParameters,
-  } = useListParameters(id);
-  // console.log('versions', versions);
-  const { overview } = useProjectOverviewAndUserList(id);
-  const { stages, environments } = useProjectOverviewAndUserList(id);
+    // downloadServers,
+  } = useListServers();
+  // console.log('listServers', listServers);
   const {
     archivedList,
     isSuccess: isListArchivedSuccess,
-    isLoading,
+    isLoading: isLoadingArchived,
     search,
     handleSearch,
     archiveMutation,
     isArchivedSuccess,
     unarchiveMutation,
-  } = useListParametersArchived({
-    archivedParameters: {
-      listArchivedAPI: getArchivedParameters,
-      archiveAPI: archiveParameter,
-      unarchiveAPI: unarchiveParameter,
-      keyArchivistList: 'parameter-archivist-list',
-      keyList: 'parameters',
-      title: 'Parameter',
+  } = useListServersArchived({
+    archivedServers: {
+      listArchivedAPI: getArchivedServers,
+      archiveAPI: archiveServer,
+      unarchiveAPI: unarchiveServer,
+      keyArchivistList: 'server-archivist-list',
+      keyList: 'servers',
+      title: 'Server',
       project_id: id,
     },
   });
-  const sortedVersions = versions?.sort((a, b) => {
-    // Compare version numbers as strings
-    return compareVersionStrings(b.number, a.number); // Sort in descending order
-  });
-
-  function compareVersionStrings(a, b) {
-    // Split version strings into arrays of individual version components
-    const versionA = a.split('.').map(Number);
-    const versionB = b.split('.').map(Number);
-
-    // Compare each version component from left to right
-    for (let i = 0; i < Math.max(versionA.length, versionB.length); i++) {
-      if (versionA[i] === undefined) return -1; // A has fewer components
-      if (versionB[i] === undefined) return 1; // B has fewer components
-      if (versionA[i] > versionB[i]) return 1; // A is greater
-      if (versionA[i] < versionB[i]) return -1; // B is greater
-    }
-
-    return 0; // Versions are equal
-  }
-  const latestVersion = sortedVersions?.[0]?.number || '';
-  const handleClickApply = () => {
-    if (overview.auto_update === true) {
-      toast.warning(
-        'This project is in auto update mode. No need to apply parameters.',
-      );
-    } else {
-      setIsApplying(true);
-    }
-  };
   return (
     <>
       <Modal
@@ -113,20 +73,13 @@ const ParametersPage = () => {
         }}
       >
         {isAddMode && (
-          <AddParameterForm
-            project_id={id}
-            onClose={() => setIsAddMode(false)}
-            stages={stages}
-            environments={environments}
-          />
+          <AddServerForm project_id={id} onClose={() => setIsAddMode(false)} />
         )}
         {typeof editedItemId !== 'undefined' && (
-          <EditParameterForm
+          <EditServerForm
             project_id={id}
             editedItemId={editedItemId}
             onClose={() => setEditedItemId(undefined)}
-            stages={stages}
-            environments={environments}
           />
         )}
       </Modal>
@@ -136,18 +89,7 @@ const ParametersPage = () => {
         onClose={() => {
           setIsApplying(false);
         }}
-      >
-        {/* if overview.auto_update == false then render <ApplyParamForm/>
-            else render toast warning message "This project auto update mode is not set."
-          */}
-
-        <ApplyParamForm
-          project_id={id}
-          onClose={() => setIsApplying(false)}
-          versions={versions}
-          listParameters={listParameters}
-        />
-      </Modal>
+      ></Modal>
 
       <Modal
         outerClassName={'outerModal'}
@@ -155,53 +97,34 @@ const ParametersPage = () => {
         onClose={() => {
           setIsReleaseMode(false);
         }}
-      >
-        <ReleaseVersionForm
-          project_id={id}
-          onClose={() => setIsReleaseMode(false)}
-          versions={versions}
-          listParameters={listParameters}
-          currentVersion={latestVersion}
-        />
-      </Modal>
-
-      <div className={styles.filter}>
-        <ButtonApply
-          handleClickApply={handleClickApply}
-          titleButton="Deploy Parameters"
-          className="me-2"
-        />
-      </div>
+      ></Modal>
       <Card
-        title={`${isListUsersSuccess ? pagination?.total : '0'} Parameters`}
+        title={`${isListUsersSuccess ? pagination?.total : '0'} Servers`}
         classTitle="title-purple"
         head={
           <>
             <FormSearch placeholder="Search by name" />
             <div className="d-flex">
-              <FiltersCustom className="me-2">
+              {/* <FiltersCustom className="me-2">
                 <FormFilter
-                  stages={stages}
-                  environments={environments}
-                  versions={versions}
-                  downloadParameters={downloadParameters}
+                  downloadServers={downloadServers}
                 />
-              </FiltersCustom>
-              <ButtonDuplicate
+              </FiltersCustom> */}
+              {/* <ButtonDuplicate
                 handleClick={() => setIsReleaseMode(true)}
                 titleButton="Release Version"
                 className="me-2"
-              />
+              /> */}
               <ButtonAdd
                 handleClickAdd={() => setIsAddMode(true)}
-                titleButton="Add Parameter"
+                titleButton="Add Server"
                 className="me-2"
               />
               <Archived
-                title="Archived Parameters"
+                title="Archived Servers"
                 archivedList={archivedList}
                 isSuccess={isListArchivedSuccess}
-                isLoading={isLoading}
+                isLoading={isListArchivedSuccess}
                 search={search}
                 handleSearch={handleSearch}
                 unarchiveMutation={unarchiveMutation}
@@ -211,9 +134,9 @@ const ParametersPage = () => {
         }
       >
         <Table
-          listParameters={listParameters}
+          listServers={listServers}
           isSuccess={isListUsersSuccess}
-          isLoading={isListParametersLoading}
+          isLoading={isLoadingArchived}
           totalPage={pagination?.totalPage}
           setEditedItemId={setEditedItemId}
           archiveMutation={archiveMutation}
@@ -224,4 +147,4 @@ const ParametersPage = () => {
   );
 };
 
-export default ParametersPage;
+export default ServersPage;

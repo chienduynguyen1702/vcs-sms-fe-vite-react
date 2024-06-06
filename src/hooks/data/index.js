@@ -33,3 +33,7 @@ export { default as useListWorkflowRunJobs } from './workflowruns/useListWorkflo
 export { default as useListUsers } from './users/useListUsers';
 export { default as useListRoles } from './roles/useListRoles';
 export { default as useListArchived } from './useListArchived';
+
+//
+export { default as useListServers } from './servers/useListServers';
+export { default as useListServersArchived } from './servers/useListServersArchived';

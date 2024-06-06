@@ -5,9 +5,9 @@ import { useParams } from 'react-router-dom';
 
 import Row from './Row/Row';
 import { NoData, Pagination } from '../../../../components';
-import { useListParameters } from '../../../../hooks/data';
+import { useListServer } from '../../../../hooks/data';
 const Table = ({
-  // listParameters,
+  listServers,
   isSuccess,
   isLoading,
   totalPage,
@@ -16,27 +16,22 @@ const Table = ({
   isArchivedSuccess,
 }) => {
   const { id } = useParams();
-  const { listParameters } = useListParameters(id);
-  // console.log('listParameters', listParameters);
-  // console.log('listParameters table totalPage', totalPage);
+  // console.log('listServers', listServers);
+  // console.log('listServer table totalPage', totalPage);
 
   return (
     <>
       <div className={cn(style.head, 'tableOuter')}>
         <div className="tableContainer">
           <div className="tableHead">
-            <div className="tableCell pb-4">Name</div>
-            <div className="tableCell">Value</div>
-            <div className="tableCell">Stage</div>
-            <div className="tableCell">Environment</div>
-            {/* <div className="tableCell">Created at</div> */}
-            <div className="tableCell">Edited At</div>
-            <div className="tableCell">Is Applied</div>
-            {/* <div className="tableCell">Expired at</div> */}
+            <div className="tableCell pb-4">Server ID</div>
+            <div className="tableCell">Server Name</div>
+            <div className="tableCell">IP</div>
+            <div className="tableCell">Description</div>
             <div className="tableCell"></div>
           </div>
           {isSuccess &&
-            listParameters?.map((item) => (
+            listServers?.map((item) => (
               <Row
                 key={item.id}
                 item={item}
@@ -46,9 +41,9 @@ const Table = ({
               />
             ))}
         </div>
-        {isSuccess && listParameters?.length === 0 && <NoData />}
+        {isSuccess && listServers?.length === 0 && <NoData />}
       </div>
-      {((isSuccess && listParameters?.length !== 0) || isLoading) && (
+      {((isSuccess && listServers?.length !== 0) || isLoading) && (
         <Pagination pageCount={totalPage || 5} />
       )}
     </>

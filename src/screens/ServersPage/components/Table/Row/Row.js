@@ -12,28 +12,11 @@ const Row = ({ item, setEditedItemId, archiveMutation, isArchivedSuccess }) => {
   return (
     <div className="tableRow">
       <div className="tableCell py-3 ps-2 roundedLeft">
-        <p>{item.name}</p>
+        <p>{item.id}</p>
       </div>
-      <p className="tableCell">{item.value}</p>
-      <div className="tableCell">
-        <p
-          className="status-default"
-          style={{ backgroundColor: item.stage.color }}
-        >
-          {item.stage.name}
-        </p>
-      </div>
-      <div className="tableCell">
-        <p
-          className="status-default"
-          style={{ backgroundColor: item.environment.color }}
-        >
-          {item.environment.name}
-        </p>
-      </div>
-      {/* <p className="tableCell">{item.createdAt}</p> */}
-      <p className="tableCell">{item.updatedAt}</p>
-      <p className="tableCell">{item.isApplied.toString()}</p>
+      <p className="tableCell">{item.name}</p>
+      <div className="tableCell">{item.ip}</div>
+      <div className="tableCell">{item.description}</div>
       <div className="tableCell roundedRight">
         <PopoverEditAndArchive
           itemId={item.id}
