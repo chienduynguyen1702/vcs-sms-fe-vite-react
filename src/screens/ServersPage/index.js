@@ -124,7 +124,7 @@ const ServersPage = () => {
                 title="Archived Servers"
                 archivedList={archivedList}
                 isSuccess={isListArchivedSuccess}
-                isLoading={isListArchivedSuccess}
+                isLoading={isLoadingArchived}
                 search={search}
                 handleSearch={handleSearch}
                 unarchiveMutation={unarchiveMutation}

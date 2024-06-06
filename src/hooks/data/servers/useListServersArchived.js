@@ -3,8 +3,8 @@ import { toast } from 'react-toastify';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // import { getArchivedAgents } from '../../../services/api';
-const useListParametersArchived = ({
-  archivedParameters = {
+const useListServersArchived = ({
+  archivedServers = {
     // listArchivedAPI: '',
     // archiveAPI: '',
     // unarchiveAPI: '',
@@ -24,15 +24,15 @@ const useListParametersArchived = ({
     keyArchivistList,
     title,
     project_id,
-  } = archivedParameters;
+  } = archivedServers;
 
   const [search, setSearch] = useState('');
 
   const parseData = useCallback((data) => {
     return data.map((item) => {
       return {
-        id: item?.ID,
-        name: item?.name,
+        id: item?.id,
+        name: item?.ip,
         archiver: item?.archived_by,
         archivedAt: item?.archived_at,
       };
@@ -44,7 +44,7 @@ const useListParametersArchived = ({
     queryFn: () => {
       return listArchivedAPI(project_id);
     },
-    select: (data) => parseData(data.data.parameters),
+    select: (data) => parseData(data.data.data),
   });
 
   const dataFiltered = useMemo(() => {
@@ -111,4 +111,4 @@ const useListParametersArchived = ({
   };
 };
 
-export default useListParametersArchived;
+export default useListServersArchived;
