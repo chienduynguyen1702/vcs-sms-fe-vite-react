@@ -29,7 +29,7 @@ const useListServersArchived = ({
   const [search, setSearch] = useState('');
 
   const parseData = useCallback((data) => {
-    return data.map((item) => {
+    return data?.map((item) => {
       return {
         id: item?.id,
         name: item?.ip,
