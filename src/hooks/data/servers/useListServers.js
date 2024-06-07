@@ -38,8 +38,8 @@ const useListServers = () => {
   }, [limit, page, queryString, setQueryString]);
 
   const parseData = useCallback((data, page, limit) => {
-    // console.log('data:', data);
-    const servers = data?.map((item) => {
+    console.log('data:', data);
+    const servers = data?.data.map((item) => {
       return {
         id: item.id,
         name: item.name,
@@ -48,9 +48,9 @@ const useListServers = () => {
       };
     });
     const pagination = {
-      total: servers?.length || 0,
+      total: data?.total || 0,
       currentPage: queryString.page,
-      totalPage: Math.ceil((servers?.length || 0) / limit),
+      totalPage: Math.ceil((data?.total || 0) / limit),
     };
     return { pagination, servers };
   }, []);
