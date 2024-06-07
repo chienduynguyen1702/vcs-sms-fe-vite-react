@@ -8,10 +8,9 @@ import {
   ButtonAdd,
   Card,
   FormSearch,
-  Archived,
   Modal,
   FiltersCustom,
-  ButtonApply,
+  ButtonExport,
 } from '../../components';
 
 import Table from './components/Table/Table';
@@ -19,21 +18,16 @@ import AddServerForm from './components/AddServerForm';
 import EditServerForm from './components/EditServerForm';
 import FormFilter from './components/FormFilter';
 import ImportServer from './components/ImportServer';
-import styles from './Server.module.sass';
-import { useListServers, useListServersArchived } from '../../hooks/data';
+import { useListServers } from '../../hooks/data';
 
-import {
-  archiveServer,
-  getArchivedServers,
-  unarchiveServer,
-} from '../../services/api';
+import ExportServer from './components/ExportServer';
 const ServersPage = () => {
   const { id } = useParams();
   const [isAddMode, setIsAddMode] = useState(false);
   const [isImportMode, setIsImportMode] = useState(false);
   const [editedItemId, setEditedItemId] = useState(undefined);
-  const [isApplying, setIsApplying] = useState(false);
-  const { queryString, setQueryString } = useQueryString();
+  const [isExportMode, setIsExportMode] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
   const {
     listServers,
     isLoading: isListServersLoading,
@@ -43,8 +37,22 @@ const ServersPage = () => {
     isDeletedSuccess,
     // downloadServers,
   } = useListServers();
-  // console.log('listServers', listServers);
+  const handleSelectItem = (item, isChecked) => {
+    setSelectedItems((prevSelected) =>
+      isChecked
+        ? [...prevSelected, item]
+        : prevSelected.filter((server) => server.id !== item.id),
+    );
+  };
 
+  const handleClickExport = () => {
+    if (selectedItems.length === 0) {
+      toast.error('Please select at least one server to export');
+      return;
+    } else {
+      setIsExportMode(true);
+    }
+  };
   return (
     <>
       <Modal
@@ -66,13 +74,6 @@ const ServersPage = () => {
           />
         )}
       </Modal>
-      <Modal
-        outerClassName={'outerModal'}
-        visible={isApplying}
-        onClose={() => {
-          setIsApplying(false);
-        }}
-      ></Modal>
 
       <Modal
         outerClassName={'outerModal'}
@@ -87,6 +88,22 @@ const ServersPage = () => {
           }}
         ></ImportServer>
       </Modal>
+
+      <Modal
+        outerClassName={'outerModal'}
+        visible={isExportMode}
+        onClose={() => {
+          setIsExportMode(false);
+        }}
+      >
+        <ExportServer
+          listExportServer={selectedItems}
+          onClose={() => {
+            setIsExportMode(false);
+          }}
+        ></ExportServer>
+      </Modal>
+
       <Card
         title={`${isListUsersSuccess ? pagination?.total : '0'} Servers`}
         classTitle="title-purple"
@@ -94,14 +111,19 @@ const ServersPage = () => {
           <>
             <FormSearch placeholder="Search by name" />
             <div className="d-flex">
-              {/* <FiltersCustom className="me-2">
-                <FormFilter2
-                  // downloadServers={downloadServers}
+              <FiltersCustom className="me-2">
+                <FormFilter
+                // downloadServers={downloadServers}
                 />
-              </FiltersCustom> */}
+              </FiltersCustom>
               <ButtonDuplicate
                 handleClick={() => setIsImportMode(true)}
                 titleButton="Import Servers"
+                className="me-2"
+              />
+              <ButtonExport
+                handleClickExport={handleClickExport}
+                titleButton="Export Servers"
                 className="me-2"
               />
               <ButtonAdd
@@ -121,6 +143,8 @@ const ServersPage = () => {
           setEditedItemId={setEditedItemId}
           deleteMutation={deleteServerMutation}
           isDeletedSuccess={isDeletedSuccess}
+          selectedItems={selectedItems}
+          onSelectItem={handleSelectItem}
         />
       </Card>
     </>

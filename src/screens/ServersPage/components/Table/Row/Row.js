@@ -2,23 +2,30 @@ import React, { useState } from 'react';
 import { EditAndDelete } from '../../../../../components';
 import moment from 'moment';
 
-const Row = ({ item, setEditedItemId, deleteMutation, isDeletedSuccess }) => {
+const Row = ({
+  item,
+  setEditedItemId,
+  deleteMutation,
+  isDeletedSuccess,
+  isChecked,
+  onSelectItem,
+}) => {
   // console.log('item', item);
   // console.log('item.updatedAt', item.updatedAt);
   // console.log(
   //   'item.updatedAt moment',
   //   moment(item.updatedAt).format('yyyy/MM/DD h:mm:ss a'),
   // );
-  const [isChecked, setIsChecked] = useState(false);
+  // const [isChecked, setIsChecked] = useState(false);
 
-  const handleCheckboxSelected = () => {
-    setIsChecked(!isChecked);
+  const handleRowClick = () => {
+    onSelectItem(item, !isChecked);
   };
   return (
-    <div className="tableRow" onClick={handleCheckboxSelected}>
+    <div className="tableRow" onClick={handleRowClick}>
       <div className="tableCell py-3 ps-2 roundedLeft">
         <p className="tableCell">
-          <input type="checkbox" checked={isChecked} />
+          <input type="checkbox" checked={isChecked} readOnly />
         </p>
       </div>
       <p className="tableCell">{item.id}</p>

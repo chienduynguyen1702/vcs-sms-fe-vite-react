@@ -14,6 +14,8 @@ const Table = ({
   setEditedItemId,
   deleteMutation,
   isDeletedSuccess,
+  selectedItems,
+  onSelectItem,
 }) => {
   const { id } = useParams();
   // console.log('listServers', listServers);
@@ -50,6 +52,10 @@ const Table = ({
                 setEditedItemId={setEditedItemId}
                 deleteMutation={deleteMutation}
                 isDeletedSuccess={isDeletedSuccess}
+                isChecked={selectedItems.some(
+                  (server) => server.id === item.id,
+                )}
+                onSelectItem={onSelectItem}
               />
             ))}
         </div>

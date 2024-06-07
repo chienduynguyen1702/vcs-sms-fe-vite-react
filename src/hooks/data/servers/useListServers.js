@@ -38,7 +38,7 @@ const useListServers = () => {
   }, [limit, page, queryString, setQueryString]);
 
   const parseData = useCallback((data, page, limit) => {
-    console.log('data:', data);
+    // console.log('data:', data);
     const servers = data?.data.map((item) => {
       return {
         id: item.id,
