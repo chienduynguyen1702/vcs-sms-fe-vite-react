@@ -18,7 +18,7 @@ import Table from './components/Table/Table';
 import AddServerForm from './components/AddServerForm';
 import EditServerForm from './components/EditServerForm';
 import FormFilter from './components/FormFilter';
-// import ReleaseVersionForm from './components/ReleaseVersionForm';
+import ImportServer from './components/ImportServer';
 import styles from './Server.module.sass';
 import { useListServers, useListServersArchived } from '../../hooks/data';
 
@@ -30,7 +30,7 @@ import {
 const ServersPage = () => {
   const { id } = useParams();
   const [isAddMode, setIsAddMode] = useState(false);
-  const [isReleaseMode, setIsReleaseMode] = useState(false);
+  const [isImportMode, setIsImportMode] = useState(false);
   const [editedItemId, setEditedItemId] = useState(undefined);
   const [isApplying, setIsApplying] = useState(false);
   const { queryString, setQueryString } = useQueryString();
@@ -39,29 +39,12 @@ const ServersPage = () => {
     isLoading: isListServersLoading,
     isSuccess: isListUsersSuccess,
     pagination,
+    deleteServerMutation,
+    isDeletedSuccess,
     // downloadServers,
   } = useListServers();
   // console.log('listServers', listServers);
-  const {
-    archivedList,
-    isSuccess: isListArchivedSuccess,
-    isLoading: isLoadingArchived,
-    search,
-    handleSearch,
-    archiveMutation,
-    isArchivedSuccess,
-    unarchiveMutation,
-  } = useListServersArchived({
-    archivedServers: {
-      listArchivedAPI: getArchivedServers,
-      archiveAPI: archiveServer,
-      unarchiveAPI: unarchiveServer,
-      keyArchivistList: 'server-archivist-list',
-      keyList: 'servers',
-      title: 'Server',
-      project_id: id,
-    },
-  });
+
   return (
     <>
       <Modal
@@ -93,11 +76,17 @@ const ServersPage = () => {
 
       <Modal
         outerClassName={'outerModal'}
-        visible={isReleaseMode}
+        visible={isImportMode}
         onClose={() => {
-          setIsReleaseMode(false);
+          setIsImportMode(false);
         }}
-      ></Modal>
+      >
+        <ImportServer
+          onClose={() => {
+            setIsImportMode(false);
+          }}
+        ></ImportServer>
+      </Modal>
       <Card
         title={`${isListUsersSuccess ? pagination?.total : '0'} Servers`}
         classTitle="title-purple"
@@ -106,28 +95,19 @@ const ServersPage = () => {
             <FormSearch placeholder="Search by name" />
             <div className="d-flex">
               {/* <FiltersCustom className="me-2">
-                <FormFilter
-                  downloadServers={downloadServers}
+                <FormFilter2
+                  // downloadServers={downloadServers}
                 />
               </FiltersCustom> */}
-              {/* <ButtonDuplicate
-                handleClick={() => setIsReleaseMode(true)}
-                titleButton="Release Version"
+              <ButtonDuplicate
+                handleClick={() => setIsImportMode(true)}
+                titleButton="Import Servers"
                 className="me-2"
-              /> */}
+              />
               <ButtonAdd
                 handleClickAdd={() => setIsAddMode(true)}
                 titleButton="Add Server"
                 className="me-2"
-              />
-              <Archived
-                title="Archived Servers"
-                archivedList={archivedList}
-                isSuccess={isListArchivedSuccess}
-                isLoading={isLoadingArchived}
-                search={search}
-                handleSearch={handleSearch}
-                unarchiveMutation={unarchiveMutation}
               />
             </div>
           </>
@@ -136,11 +116,11 @@ const ServersPage = () => {
         <Table
           listServers={listServers}
           isSuccess={isListUsersSuccess}
-          isLoading={isLoadingArchived}
+          isLoading={isListServersLoading}
           totalPage={pagination?.totalPage}
           setEditedItemId={setEditedItemId}
-          archiveMutation={archiveMutation}
-          isArchivedSuccess={isArchivedSuccess}
+          deleteMutation={deleteServerMutation}
+          isDeletedSuccess={isDeletedSuccess}
         />
       </Card>
     </>

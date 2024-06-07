@@ -79,7 +79,7 @@ const AuthProvider = ({ children }) => {
       // console log response ma cung deo thay gi het
       // console.log('response from validateFn', response);
       const response = await validateFn();
-      saveMe(response.data?.user);
+      saveMe(response?.data.data);
       setIsAuthenticated(true);
     } catch (error) {
       console.log(error);

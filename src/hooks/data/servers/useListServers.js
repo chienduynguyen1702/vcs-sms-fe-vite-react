@@ -8,6 +8,7 @@ import {
   addServer,
   editServer,
   getListServers,
+  deleteServer,
   getStages,
   getEnvironments,
   getVersions,
@@ -106,6 +107,25 @@ const useListServers = () => {
       },
     },
   );
+
+  const deleteServerMutation = useMutation(
+    (server_id) => {
+      return deleteServer(server_id);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['servers'],
+        });
+        toast.success('Delete server successfully!');
+      },
+      onError: (error) => {
+        toast.error(error.response.data.message, {
+          autoClose: 5000,
+        });
+      },
+    },
+  );
   // Hàm tải xuống danh sách tham số
   // const downloadServers = async (queryString) => {
   //   console.log('downloadServers queryString:', queryString);
@@ -134,6 +154,7 @@ const useListServers = () => {
     isLoading,
     addServerMutation,
     editServerMutation,
+    deleteServerMutation,
     // downloadServers,
   };
 };

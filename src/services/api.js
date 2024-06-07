@@ -237,6 +237,21 @@ export const deleteServer = (server_id) =>
     method: 'DELETE',
     url: `/servers/${server_id}`,
   });
+export const downloadTemplateServer = () =>
+  authApi({
+    method: 'GET',
+    url: '/servers/download-template',
+  });
+
+export const uploadFileServers = (data) =>
+  authApi({
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    method: 'POST',
+    url: '/servers/upload',
+    data,
+  });
 
 export const getArchivedServers = () =>
   authApi({

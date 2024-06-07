@@ -29,6 +29,7 @@ export { default as Dropdown } from './Dropdown';
 export { default as Editor } from './Editor';
 export { default as Favorite } from './Favorite';
 export { default as File } from './File';
+export { default as FileUpload } from './FileUpload';
 export { default as FiltersCustom } from './FiltersCustom';
 export { default as Form } from './Form';
 export { default as FormSearch } from './FormSearch';
@@ -93,4 +94,5 @@ export { default as Avatar } from './Avatar';
 export { default as MonthYearDatePicker } from './DatePicker/MonthYearDatePicker';
 
 export { default as PopoverEditAndArchive } from './PopoverEditAndArchive';
+export { default as EditAndDelete } from './EditAndDelete';
 export { default as PopoverEditAndRemove } from './PopoverEditAndRemove';

@@ -30,7 +30,7 @@ const EditForm = ({ editedItemId, onClose }) => {
       try {
         const response = await getServerByID(editedItemId);
         const serverData = response.data.data; // Assuming response.data contains server information
-        console.log('serverData EditForm', serverData);
+        // console.log('serverData EditForm', serverData);
         method.reset(serverData); // Populate form fields with server data
       } catch (error) {
         console.error('Error fetching parram data:', error);
