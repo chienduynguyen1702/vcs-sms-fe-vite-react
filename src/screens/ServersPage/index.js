@@ -31,7 +31,7 @@ const ServersPage = () => {
   const {
     listServers,
     isLoading: isListServersLoading,
-    isSuccess: isListUsersSuccess,
+    isSuccess: isListServersSuccess,
     pagination,
     deleteServerMutation,
     isDeletedSuccess,
@@ -53,6 +53,10 @@ const ServersPage = () => {
       setIsExportMode(true);
     }
   };
+
+  if (!isListServersSuccess && !isListServersLoading) {
+    toast.error('Failed to load servers');
+  }
   return (
     <>
       <Modal
@@ -105,7 +109,7 @@ const ServersPage = () => {
       </Modal>
 
       <Card
-        title={`${isListUsersSuccess ? pagination?.total : '0'} Servers`}
+        title={`${isListServersSuccess ? pagination?.total : '0'} Servers`}
         classTitle="title-purple"
         head={
           <>
@@ -137,7 +141,7 @@ const ServersPage = () => {
       >
         <Table
           listServers={listServers}
-          isSuccess={isListUsersSuccess}
+          isSuccess={isListServersSuccess}
           isLoading={isListServersLoading}
           totalPage={pagination?.totalPage}
           setEditedItemId={setEditedItemId}
