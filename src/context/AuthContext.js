@@ -57,7 +57,6 @@ const AuthProvider = ({ children }) => {
   const login = useCallback(
     async (data) => {
       try {
-        toast.success('Login success');
         const response = await loginFn(data);
         // console.log('response.data', response.data);
         setIsAuthenticated(true);
@@ -65,9 +64,11 @@ const AuthProvider = ({ children }) => {
         token.setAccessToken(accessToken);
         saveMe(response?.data.data);
         navigate.push('/home', { replace: true });
-        console.log('X');
+        // console.log('X');
+        toast.success('Login success');
         return true;
-      } catch {
+      } catch (error) {
+        toast.error(`Login failed: ${error.message}`);
         return false;
       }
     },
