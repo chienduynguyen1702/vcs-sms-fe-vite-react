@@ -10,10 +10,10 @@ const Row = ({ item }) => {
           <div className="status-default">{item.name}</div>
         </div>
         <div className="tableCell">
-          <div className="font14 colorN4">{item.description}</div>
+          <div className="">{item.description}</div>
         </div>
         <div className="tableCell">
-          <div className="font14 colorN4">{item.usersCount} users</div>
+          <div className="">{item.usersCount} users</div>
         </div>
 
         {/* <div className="tableCell">

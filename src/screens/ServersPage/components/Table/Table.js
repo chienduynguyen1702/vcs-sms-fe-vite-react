@@ -30,7 +30,9 @@ const Table = ({
             <div className="tableCell">Server ID</div>
             <div className="tableCell">Server Name</div>
             <div className="tableCell">IP</div>
+            <div className="tableCell">Status</div>
             <div className="tableCell">Description</div>
+            <div className="tableCell">Last Ping At</div>
             <div
               className="tableCell"
               style={{

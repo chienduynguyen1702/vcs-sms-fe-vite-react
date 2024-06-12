@@ -45,6 +45,8 @@ const useListServers = () => {
         name: item.name,
         ip: item.ip,
         description: item.description,
+        is_online: item.is_online,
+        ping_at: item.ping_at,
       };
     });
     const pagination = {
