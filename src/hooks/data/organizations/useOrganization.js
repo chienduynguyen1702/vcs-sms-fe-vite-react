@@ -17,7 +17,7 @@ const useOrganization = (id) => {
 
   const editOrganizationMutation = useMutation(
     (data) => {
-      console.log('data', data);
+      // console.log('data', data);
       return editOrganizationById(data.org_id, data.data);
     },
     {

@@ -79,7 +79,7 @@ export default function FormFilter({ parentFc, onCloseModal }) {
 
     onCloseModal();
 
-    parentFc(false);
+    // parentFc(false);
   };
 
   const onClickSend = (data) => {
