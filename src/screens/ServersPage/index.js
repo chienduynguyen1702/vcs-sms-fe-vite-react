@@ -11,6 +11,7 @@ import {
   Modal,
   FiltersCustom,
   ButtonExport,
+  ButtonImport,
 } from '../../components';
 
 import Table from './components/Table/Table';
@@ -21,10 +22,12 @@ import ImportServer from './components/ImportServer';
 import { useListServers } from '../../hooks/data';
 
 import ExportServer from './components/ExportServer';
+import ButtonSendMail from '../../components/ButtonSendMail';
 const ServersPage = () => {
   const { id } = useParams();
   const [isAddMode, setIsAddMode] = useState(false);
   const [isImportMode, setIsImportMode] = useState(false);
+  const [isSendMail, setIsSendMail] = useState(false);
   const [editedItemId, setEditedItemId] = useState(undefined);
   const [isExportMode, setIsExportMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -108,6 +111,20 @@ const ServersPage = () => {
         ></ExportServer>
       </Modal>
 
+      <Modal
+        // outerClassName={'outerModal'}
+        visible={isSendMail}
+        onClose={() => {
+          setIsSendMail(false);
+        }}
+      >
+        <FormFilter
+          onCloseModal={() => {
+            setIsSendMail(false);
+          }}
+        />
+      </Modal>
+
       <Card
         title={`${isListServersSuccess ? pagination?.total : '0'} Servers`}
         classTitle="title-purple"
@@ -115,11 +132,11 @@ const ServersPage = () => {
           <>
             <FormSearch placeholder="Search by name" />
             <div className="d-flex">
-              <FiltersCustom className="me-2">
-                <FormFilter
-                // downloadServers={downloadServers}
-                />
-              </FiltersCustom>
+              <ButtonSendMail
+                className="me-2"
+                handleClick={() => setIsSendMail(true)}
+                titleButton="Report Mail"
+              />
               <ButtonDuplicate
                 handleClick={() => setIsImportMode(true)}
                 titleButton="Import Servers"
