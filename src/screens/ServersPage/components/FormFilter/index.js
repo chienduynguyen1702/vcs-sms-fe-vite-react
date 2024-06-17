@@ -2,13 +2,29 @@ import React, { useMemo } from 'react';
 import { FormProvider, set, useForm } from 'react-hook-form';
 import { Stack } from 'react-bootstrap';
 
-import { RHFCheckbox, RHFInputSelect, RHFLabel } from '../../../../components';
+import { RHFDate, RHFInputSelect, AsyncButton } from '../../../../components';
 
 import { useQueryString } from '../../../../hooks';
+import { useListUsers, useListServers } from '../../../../hooks/data/';
+import { toast } from 'react-toastify';
 
 export default function FormFilter({ parentFc }) {
   // console.log('version in formfilter', versions);
   const { queryString, setQueryString } = useQueryString();
+  const { listUsers } = useListUsers();
+  const { sendServerReportToEmailMutation } = useListServers();
+  const MOCK_USER_LIST = [
+    {
+      id: 1,
+      name: 'John Doe',
+      email: 'johndoe@vcs.vn',
+    },
+    {
+      id: 2,
+      name: 'Jane Doe',
+      email: 'janedoe@vcs.vn',
+    },
+  ];
   const settings = useMemo(() => {
     const stageSettings = queryString.stages || [];
     const environmentSettings = queryString.environments || [];
@@ -99,7 +115,19 @@ export default function FormFilter({ parentFc }) {
     // setQueryString(params);
     parentFc(false);
   };
-
+  const onClickSend = (data) => {
+    sendServerReportToEmailMutation.mutate(data, {
+      onSuccess: () => {
+        onClose();
+      },
+      onError: (error) => {
+        console.log('error', error.response.data.error);
+        toast.error(error.response.data.error, {
+          autoClose: 5000,
+        });
+      },
+    });
+  };
   const onDownload = () => {
     // const params = { ...queryString };
 
@@ -142,43 +170,48 @@ export default function FormFilter({ parentFc }) {
   };
   return (
     <FormProvider {...method}>
-      <form onSubmit={method.handleSubmit(handleSubmit)}>
+      <form onSubmit={method.handleSubmit(onClickSend)}>
         <div className="borderTop borderBottom py-3">
-          <RHFLabel
-            classLabel="mb-2"
-            label="Stages"
-            tooltip="Search and filter by actived Stages"
+          <RHFDate
+            label="From Date"
+            nameDate="from"
+            tooltip="Select the starting date"
           />
-        </div>
-
-        <div className="borderBottom py-3">
-          <RHFLabel
-            classLabel="mb-2"
-            label="Environments"
-            tooltip="Search and filter by actived Environments"
+          <RHFDate
+            label="To Date"
+            nameDate="to"
+            tooltip="Select the ending date"
           />
-        </div>
 
-        <div className="borderBottom py-3">
-          {/* <RHFInputSelect
-            label="Version"
+          <RHFInputSelect
+            label="Receiver Mail"
             tooltip="Filter by Version"
-            name="version"
-            suggestions={versions?.map((version) => ({
-              label: version.number,
-              value: version.number,
+            name="mail"
+            suggestions={listUsers?.map((user) => ({
+              label: user.email,
+              value: user.email,
             }))}
-          /> */}
+          />
         </div>
 
         <Stack direction="horizontal" className="mt-4 justify-content-end">
           <p onClick={onClose} className="button-white">
             Reset
           </p>
-          <button className="button-white ms-2" onClick={onDownload}>
+          {/* <button className="button-white ms-2" onClick={onDownload}>
             Download
-          </button>
-          <button className="button ms-2">Apply</button>
+          </button> */}
+          {/* <button className="button ms-2" onClick={onClickSend} >Send</button> */}
+
+          <AsyncButton
+            threeDotsWidth="20"
+            threeDotsHeight="20"
+            type="submit"
+            className="button ms-2"
+            value="Send"
+            notMaxWidth
+            loading={false}
+          />
         </Stack>
       </form>
     </FormProvider>

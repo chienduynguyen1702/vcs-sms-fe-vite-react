@@ -9,16 +9,12 @@ import {
   editServer,
   getListServers,
   deleteServer,
-  getStages,
-  getEnvironments,
-  getVersions,
   getProjectOverview,
   downloadListServer,
+  sendServerReportToEmail,
 } from '../../../services/api';
 // import { PARAMETERS } from '../../mocks/servers';
-import moment from 'moment';
 import { toast } from 'react-toastify';
-import { number } from 'yup';
 
 const DEFAULT_QUERY_STRING = {
   page: 1,
@@ -128,6 +124,27 @@ const useListServers = () => {
       },
     },
   );
+
+  const sendServerReportToEmailMutation = useMutation(
+    (data) => {
+      console.log('sendServerReportToEmailMutation data:', data);
+      return sendServerReportToEmail(data);
+    },
+    {
+      onSuccess: (response) => {
+        console.log('sendServerReportToEmailMutation response:', response);
+        const successMessage = response.data.message;
+        toast.success(successMessage, {
+          autoClose: 10000,
+        });
+      },
+      onError: (error) => {
+        toast.error(error.response.data.message, {
+          autoClose: 10000,
+        });
+      },
+    },
+  );
   // Hàm tải xuống danh sách tham số
   // const downloadServers = async (queryString) => {
   //   console.log('downloadServers queryString:', queryString);
@@ -158,6 +175,7 @@ const useListServers = () => {
     editServerMutation,
     deleteServerMutation,
     // downloadServers,
+    sendServerReportToEmailMutation,
   };
 };
 

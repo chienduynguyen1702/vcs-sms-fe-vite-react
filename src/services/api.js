@@ -252,7 +252,12 @@ export const uploadFileServers = (data) =>
     url: '/servers/upload',
     data,
   });
-
+export const sendServerReportToEmail = (data) =>
+  authApi({
+    method: 'POST',
+    url: '/servers/send-report',
+    data,
+  });
 export const getArchivedServers = () =>
   authApi({
     method: 'GET',
