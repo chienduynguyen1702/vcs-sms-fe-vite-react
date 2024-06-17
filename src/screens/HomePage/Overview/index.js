@@ -24,7 +24,7 @@ const Overview = () => {
     // Handle case when organization data is not available
     return <p>No organization data available</p>;
   }
-  console.log('org', org);
+  // console.log('org', org);
   return (
     <>
       <Modal
