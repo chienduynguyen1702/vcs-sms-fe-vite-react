@@ -5,7 +5,7 @@ import cn from 'classnames';
 import styles from './ButtonExport.module.sass';
 
 export default function ButtonExport({
-  titleExport = 'Export',
+  titleButton,
   handleClickExport,
   isLoading,
   className,
@@ -20,7 +20,7 @@ export default function ButtonExport({
       )}
       onClick={handleClickExport}
     >
-      {titleExport}
+      {titleButton}
       {isLoading ? (
         <Oval
           height={20}
