@@ -23,7 +23,7 @@ export default function useListRoles() {
   }, [limit, page, queryString, setQueryString]);
 
   const parseData = useCallback((data) => {
-    console.log('data.roles: ', data);
+    // console.log('data.roles: ', data);
     const roles = data.map((item) => {
       return {
         id: item.id,
