@@ -16,12 +16,12 @@ const navigation = [
     url: '/home',
     permissions: [''],
   },
-  {
-    title: 'Dashboard',
-    icon: 'activity',
-    url: '/dashboard',
-    permissions: [''],
-  },
+  // {
+  //   title: 'Dashboard',
+  //   icon: 'activity',
+  //   url: '/dashboard',
+  //   permissions: [''],
+  // },
   // {
   //   title: 'Parameters',
   //   icon: 'diamond',
