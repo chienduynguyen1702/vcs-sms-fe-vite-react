@@ -63,7 +63,7 @@ const AuthProvider = ({ children }) => {
         const accessToken = response?.data?.data?.token;
         token.setAccessToken(accessToken);
         saveMe(response?.data.data);
-        navigate('/home', { replace: true });
+        navigate('/servers', { replace: true });
         // console.log('X');
         toast.success('Login success');
         return true;

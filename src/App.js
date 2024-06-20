@@ -48,7 +48,7 @@ function App() {
           <AuthProvider>
             <UnderDevelopmentProvider>
               <Routes>
-                <Route exact path="/" element={<Navigate to="/home" />} />
+                <Route exact path="/" element={<Navigate to="/servers" />} />
                 <Route
                   exact
                   path="/*"
